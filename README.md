@@ -1,12 +1,4 @@
-
-- Install RPI Imager
-  ```
-  snap install rpi-imager
-  ```
-- Download Raspberry PI OS Lite
-
-- In the settings of RPI Imager enable SSH & configure the WIFI settings
-
+# PS4 Remote Control Car
 
 ## Set up wifi & SSH on Pi Zero W (Legacy)
 
@@ -37,7 +29,7 @@ nmap -sP 192.168.0.0/24
 
 SSH onto the pi using password authentication
 ```
-ssh -o PreferredAuthentications=password pi@<pi-ip-address>
+ssh -o PreferredAuthentications=password pi@$PI_ADDRESS
 ```
 
 ## Requirements
@@ -47,61 +39,22 @@ ssh -o PreferredAuthentications=password pi@<pi-ip-address>
     sudo apt install pip
     sudo apt-get install libgles2-mesa-dev
 
-    sudo pip3 install adafruit-circuitpython-motorkit
-    sudo pip3 install ds4drv
-    sudo pip3 install pygame
-```
-
-## Start DS4DRV (Dual Shock bluetooth) on start-up
-
-Create systemd file for dsdrv.
-
-```
-sudo nano /etc/systemd/system/ds4drv.service
-```
-
-with the context
-
-```
-[Unit]
-Description=DS4 Driver Service
-After=bluetooth.target
-Requires=bluetooth.target
-
-[Service]
-ExecStart=/usr/local/bin/ds4drv
-Restart=always
-User=root
-# Wait a few seconds to let Bluetooth initialize
-ExecStartPre=/bin/sleep 5
-StandardOutput=syslog
-StandardError=syslog
-
-[Install]
-WantedBy=multi-user.target
-```
- 
-Then run
-
-```
-sudo systemctl daemon-reload
-sudo systemctl enable ds4drv
-sudo systemctl restart ds4drv
+    sudo python3 -m pip install --upgrade pip
+    sudo python3 -m pip install -r requirements.txt
 ```
 
 ## Install script
     
 ```
-scp -o PreferredAuthentications=password -r src pi@192.168.1.145:/home/pi/mark01-src
+scp -o PreferredAuthentications=password -r src pi@$PI_ADDRESS:/home/pi
 ```
 
-
-# Test run
+## Test run
 
 SSH on to pi
 
 ```
-ssh -o PreferredAuthentications=password pi@<pi-ip-address>
+ssh -o PreferredAuthentications=password pi@$PI_ADDRESS
 ```
 
 On the PS4 controller hold down share and PS4 button
@@ -109,10 +62,8 @@ On the PS4 controller hold down share and PS4 button
 Once connected, run the script on the pi:
   
 ```
-sudo python3 controller_demoy.py
+sudo USE_NOOP_MOTORS=1 python3 mark01.py
 ```
-
-
 
 
 ## Executing script on start-up
@@ -146,27 +97,5 @@ https://howchoo.com/g/mwnlytk3zmm/how-to-add-a-power-button-to-your-raspberry-pi
 
 - In Motor Hat wire LEFT wheel (black, red) into M4, and RIGHT wheel into M1 (red,black)
   so it should be RWred, RWblack, -, -, -, -,-,-, LWblack, LWRed
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  https://raspberrypi.stackexchange.com/questions/137164/ssh-into-raspberry-pi-os-lite-not-working
-  
-  
+- Connect the positive terminal on the battery pack to the power in, and the battery pack's negative terminal to the ground on the motor hat
+

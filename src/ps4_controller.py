@@ -1,7 +1,5 @@
 import pygame
 import time
-# axis=3 -> L2
-# axis=4 -> R2
 
 class PS4Controller:
     def __init__(self):
