@@ -9,13 +9,13 @@ class DriveController:
         """Return (motor1, motor4) throttle values based on controller state."""
         self.controller.update()
 
-        motor1 = (ps4.get_L2_axis() + 1)/2
-    	motor4 = (ps4.get_R2_axis() + 1)/2
+        motor1 = (self.controller.get_L2_axis() + 1)/2
+        motor4 = (self.controller.get_R2_axis() + 1)/2
     
-        if ps4.get_L1() > 0:
+        if self.controller.get_L1() > 0:
           motor1 = -1;
        
-        if ps4.get_R1() > 0:
+        if self.controller.get_R1() > 0:
           motor4 = -1;    
        
         # Clamp between -1 and 1

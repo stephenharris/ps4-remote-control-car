@@ -1,4 +1,5 @@
 from adafruit_motorkit import MotorKit
+from motor_driver import MotorDriver
 
 class RealMotorDriver(MotorDriver):
     def __init__(self):

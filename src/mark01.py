@@ -34,7 +34,7 @@ signal.signal(signal.SIGQUIT, cleanup)
 
 motorDriver = get_motor_driver()
 ps4 = PS4Controller()
-drive_controller = DriveController(ps4)
+driveController = DriveController(ps4)
 clock = pygame.time.Clock()
 stdscr = curses.initscr()
 
@@ -52,7 +52,7 @@ try:
     for event in pygame.event.get():
         pass
         
-    motor1, motor4 = drive.get_motor_throttles()
+    motor1, motor4 = driveController.get_motor_throttles()
     motorDriver.set_throttles(motor1, motor4);
 
     stdscr.erase()
